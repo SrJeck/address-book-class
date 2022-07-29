@@ -42,63 +42,18 @@ def add_contact():
 
 
 
-# def display_search_result(result):
-#     index = 1
-#     print("\033[1;32;40m** ALL CONTACTS **\n")
-#     print("\033[1;33;40mID\t| NAME\t| ADDRESS\t| CONTACT\t| EMAIl")
-#     for entry in result:
-#         print("\033[1;37;40m{}\t| {}\t| {}\t| {}\t| {}".format(
-#             index,
-#             entry.get("name"),
-#             entry.get("address"),
-#             entry.get("contact"),
-#             entry.get("email")
-#             ))
-#         index = index + 1
-
 def display_search_result(result):
-
-    max_length_name = len("Name")
-    max_length_address = len("Address")
-    max_length_contact = len("Contact")
-    max_length_email = len("Email")
-    max_length_index = len(str(len("No.")))
-    ctr = 1
-    if len(result) > 0:
-        for item in result:
-            if max_length_name < len(item.get('name')):
-                max_length_name = len(item.get('name'))
-            if max_length_address < len(item.get('address')):
-                max_length_address = len(item.get('address'))
-            if max_length_email < len(item.get('email')):
-                max_length_email = len(item.get('email'))
-            if max_length_contact < len(str(item.get('contact'))):
-                max_length_contact = len(str(item.get('contact')))
-
-        print("\033[1;33;40m ** DISPLAY ADDRESS/ES **\n \033[1;37;40m")
-        print(
-            "\033[1;32;40mNo.{}\t|Name{}\t|Email{}\t|Address{}\t|Contact\033[1;37;40m".format(
-                add_space(max_length_index-len("No.")),
-                add_space(max_length_name - len("Name")),
-                add_space(max_length_email - len("Email")),
-                add_space(max_length_address - len("Address"))
-                ))
-        for item in result:
-
-            print("{} \t|{}\t|{}\t|{}\t|{}".format(
-                str(ctr) + add_space(max_length_index - len(str(ctr))),
-                item.get('name') + add_space(max_length_name -
-                                             len(item.get('name'))),
-                item.get('email') + add_space(max_length_email -
-                                              len(item.get('email'))),
-                item.get('address') + add_space(max_length_address -
-                                                len(item.get('address'))),
-                str(item.get('contact')) + add_space(max_length_contact - len(str(item.get('contact'))))))
-            ctr += 1
-    else:
-        print("No results")
-
-    # input("\n\033[1;34;40mPress enter to go back to main menu...\n\033[1;37;40m")
+    index = 1
+    print("** Address Book **".rjust(53)+"\n"+"No.".rjust(5)+"|"+"Name".rjust(20)+"|"+"Address".rjust(20)+ "|"+"Contact".rjust(20)+"|"+"Email".rjust(20)+"")
+    for entry in result:
+        print("\033[1;37;40m{}|{}|{}|{}|{}".format(
+            str(index).rjust(5),
+            entry.get("name").rjust(20),
+            entry.get("address").rjust(20),
+            str(entry.get("contact")).rjust(20),
+            entry.get("email").rjust(20)
+            ))
+        index = index + 1
 
 
 def add_space(num):
@@ -215,6 +170,8 @@ def display_menu():
 
         if selection == "1":
             clear_screen()
+            # print("\033[1;32;40m** ALL CONTACTS **\n")
+            # print("\033[1;33;40m"+'ID'.rjust(5)+"|"+'NAME'.rjust(20)+"|"+'ADDRESS'.rjust(20)+"|"+'CONTACT'.rjust(20)+"|"+'EMAIl'.rjust(20)+"")
             display_search_result(addressContactRepository.get_address_contacts().get("details"))
             if transaction_selection() == False:
                 break
